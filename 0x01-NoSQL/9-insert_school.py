@@ -33,8 +33,9 @@ def insert_school(mongo_collection, **kwargs):
         >>> isinstance(school_id, str)
         True
     """
-    result = mongo_collection.insert_one(kwargs)
-    return str(result.inserted_id)
+    if kwargs:
+        result = mongo_collection.insert_one(kwargs)
+        return str(result.inserted_id)
 
 # Run the doctest to check correctness of the code
 
