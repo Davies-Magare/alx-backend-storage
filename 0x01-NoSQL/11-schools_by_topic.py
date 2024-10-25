@@ -42,7 +42,7 @@ def schools_by_topic(mongo_collection, topic):
         UCLA ['C', 'Python']
         UCSD ['Cassandra', 'Python']
     """
-    return mongo_collection.find({"topics": {"$in": ['Python']}})
+    return list(mongo_collection.find({"topics": {"$in": ['Python']}}))
 
 
 # Run doctests to verify correctness of the code
