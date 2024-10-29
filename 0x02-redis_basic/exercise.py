@@ -22,3 +22,28 @@ class Cache:
         id = str(uuid.uuid4())
         self._redis.set(id, data)
         return id
+   
+    def get(self, key, fn=None):
+        """Retrieve key value from redis db"""
+        value = self._redis.get(key)
+        print(value)
+        if value is None:
+            return None
+        if fn:
+            return fn(value)
+        try:
+            return self.get_int(value)
+        except Exception:
+            try:
+                return self.get_str(value)
+            except Exception:
+                return None
+
+    def get_str(self, value: bytes) -> str:
+        """Convert byte to regular string"""
+        return value.decode("utf-8")
+
+    def get_int(self, value: bytes) -> int:
+        """Convert byte to integer"""
+        return int(value.decode("utf-8"))
+
